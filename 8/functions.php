@@ -20,6 +20,8 @@ function writeJson($fileName, $data) {
 
 function saveComment($name, $text) {
   $list = readJson(COMMENTS_FILE_NAME, []);
+  $name = strip_tags($name, '<b>');
+  $text = strip_tags($text, '<b>');
   $list[] = [
     'name' => $name,
     'text' => $text,
@@ -44,7 +46,7 @@ function builtHTML($array) {
         if(strpos($temp, $banWord) === false) {
           continue;
         }
-        $temp = strip_tags(str_replace($banWord, "***", $temp, $count), '<b>');
+        $temp = str_replace($banWord, "***", $temp, $count);
         if ($count) {
           echo "Incorrect comment!";
         }
@@ -62,8 +64,3 @@ function banList() {
     'power'
   ];
 }
-
-/*function replaceTags() {
-  $content = strip_tags(json_decode("COMMENTS_FILE_NAME"), '<b>');
-  return $content;
-}*/
